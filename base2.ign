@@ -1,0 +1,45 @@
+{
+  "ignition": {
+    "version": "3.1.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "name": "core",
+        "sshAuthorizedKeys": ["AAAAB3NzaC1yc2EAAAADAQABAAABgQDKF92//Ol2a7YN+Hv/tANpyb1XDK9Ny+wMZlbU5VjmazjcYEDhdQzuqj2s5Qs0tRiur0+E+D8WJ8TH2hMBNH7WMzZ60rXPpteHJXakgb2ShfWsbK5KFAc4GtybwhvWTDaj06NKbENiS1ryCNGxjwQVEBZnGUA1Iyu6VZP42apFMlz5E057SZjaDc/U1GzWXumRrJGnUvj7Jr+Bv8j15GVIw45QKyyemySsRAIY+hi4XrYMmUPh9Lr3owgxpXBTpvmZIIMm5qzQbarghXpy6RvpH+KuEx0CsGluFZ1R//Yl+1fgs2YztM5l0lgXsGPUNMYWvlsUhjq58n6FCxu8ET1VB86JAvv8G+1cE7Kpm78iqsPxKJSXulFtYGUU0jcFJyMmOY2JoHRmlSHa6cxZGNNagAB+532g48jTiS+40Bs6tRpo9+wsMnHUKL1Em5DcFipqnCrl0ssFnz2MA9MMepk5h1DNjNveyX1TLpCyz3vtf2s5+p+zDdJvEP0/sw3v+6k="]
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/homeassistant.yaml",
+        "mode": 420,
+        "contents": {
+          "source": "data:,I2NvbmZpZ3VyYXRpb24ueWFtbAoKIyBMb2FkIGRlZmF1bHQgc2V0IG9mIGludGVncmF0aW9ucwpkZWZhdWx0X2NvbmZpZzoKCiMgQ29uZmlndXJlIHRoZSBIVFRQIGNvbXBvbmVudApodHRwOgogIGJhc2VfdXJsOiBodHRwOi8vMTkyLjE2OC4yMS4yNTo4MTIzCgojIEVuYWJsZSB0aGUgZnJvbnRlbmQKZnJvbnRlbmQ6CgojIEVuYWJsZSBjb25maWd1cmF0aW9uIFVJCmNvbmZpZzoKCiMgRW5hYmxlIHN5c3RlbSBoZWFsdGggY29tcG9uZW50CnN5c3RlbV9oZWFsdGg6CgojIEVuYWJsZSBsb2dnaW5nIGNvbXBvbmVudApsb2dnZXI6CiAgZGVmYXVsdDogaW5mbwoKIyBFbmFibGUgdGhlIGRpc2NvdmVyeSBjb21wb25lbnQKZGlzY292ZXJ5OgoKIyBFbmFibGUgdGhlIG1vYmlsZSBhcHAgY29tcG9uZW50Cm1vYmlsZV9hcHA6CgojIEVuYWJsZSB0aGUgY2xvdWQgY29tcG9uZW50CmNsb3VkOgoKIyBFbmFibGUgdGhlIG1hcCBjb21wb25lbnQKbWFwOgoKIyBFbmFibGUgdGhlIHN1biBjb21wb25lbnQKc3VuOgoKIyBFbmFibGUgdGhlIGhpc3RvcnkgY29tcG9uZW50Cmhpc3Rvcnk6CgojIEVuYWJsZSB0aGUgbG9nYm9vayBjb21wb25lbnQKbG9nYm9vazoKCiMgRW5hYmxlIHRoZSByZWNvcmRlciBjb21wb25lbnQKcmVjb3JkZXI6CiAgcHVyZ2Vfa2VlcF9kYXlzOiAzMAoKIyBFbmFibGUgdGhlIHVwZGF0ZXIgY29tcG9uZW50CnVwZGF0ZXI6Cg=="
+        }
+      },
+      {
+        "path": "/etc/systemd/network/10-static-en.network",
+        "mode": 420,
+        "contents": {
+          "source": "data:,[Match]\nName=en*\n\n[Network]\nAddress=192.168.21.25/24\nGateway=192.168.21.1\nDNS=8.8.8.8"
+        }
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "name": "homeassistant.service",
+        "enabled": true,
+        "contents": "[Service]\nExecStart=/usr/bin/podman run --rm --name homeassistant -v /etc/homeassistant.yaml:/config/configuration.yaml -p 8123:8123 homeassistant/home-assistant:stable\n[Install]\nWantedBy=multi-user.target"
+      },
+      {
+        "name": "pihole.service",
+        "enabled": true,
+        "contents": "[Service]\nExecStart=/usr/bin/podman run --rm --name pihole -p 53:53/tcp -p 53:53/udp -p 80:80 -e TZ='Europe/Brussels' pihole/pihole:latest\n[Install]\nWantedBy=multi-user.target"
+      }
+    ]
+  }
+}
