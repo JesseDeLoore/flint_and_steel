@@ -16,14 +16,7 @@
         "path": "/etc/homeassistant.yaml",
         "mode": 420,
         "contents": {
-          "source": "data:,<your-homeassistant-config>"
-        }
-      },
-      {
-        "path": "/etc/pihole.yaml",
-        "mode": 420,
-        "contents": {
-          "source": "data:,<your-pihole-config>"
+          "source": "data:,I2NvbmZpZ3VyYXRpb24ueWFtbAoKIyBMb2FkIGRlZmF1bHQgc2V0IG9mIGludGVncmF0aW9ucwpkZWZhdWx0X2NvbmZpZzoKCiMgQ29uZmlndXJlIHRoZSBIVFRQIGNvbXBvbmVudApodHRwOgogIGJhc2VfdXJsOiBodHRwOi8vMTkyLjE2OC4yMS4yNTo4MTIzCgojIEVuYWJsZSB0aGUgZnJvbnRlbmQKZnJvbnRlbmQ6CgojIEVuYWJsZSBjb25maWd1cmF0aW9uIFVJCmNvbmZpZzoKCiMgRW5hYmxlIHN5c3RlbSBoZWFsdGggY29tcG9uZW50CnN5c3RlbV9oZWFsdGg6CgojIEVuYWJsZSBsb2dnaW5nIGNvbXBvbmVudApsb2dnZXI6CiAgZGVmYXVsdDogaW5mbwoKIyBFbmFibGUgdGhlIGRpc2NvdmVyeSBjb21wb25lbnQKZGlzY292ZXJ5OgoKIyBFbmFibGUgdGhlIG1vYmlsZSBhcHAgY29tcG9uZW50Cm1vYmlsZV9hcHA6CgojIEVuYWJsZSB0aGUgY2xvdWQgY29tcG9uZW50CmNsb3VkOgoKIyBFbmFibGUgdGhlIG1hcCBjb21wb25lbnQKbWFwOgoKIyBFbmFibGUgdGhlIHN1biBjb21wb25lbnQKc3VuOgoKIyBFbmFibGUgdGhlIGhpc3RvcnkgY29tcG9uZW50Cmhpc3Rvcnk6CgojIEVuYWJsZSB0aGUgbG9nYm9vayBjb21wb25lbnQKbG9nYm9vazoKCiMgRW5hYmxlIHRoZSByZWNvcmRlciBjb21wb25lbnQKcmVjb3JkZXI6CiAgcHVyZ2Vfa2VlcF9kYXlzOiAzMAoKIyBFbmFibGUgdGhlIHVwZGF0ZXIgY29tcG9uZW50CnVwZGF0ZXI6Cg=="
         }
       },
       {
@@ -45,7 +38,7 @@
       {
         "name": "pihole.service",
         "enabled": true,
-        "contents": "[Service]\nExecStart=/usr/bin/podman run --rm --name pihole -v /etc/pihole.yaml:/etc/pihole/pihole.conf -p 53:53/tcp -p 53:53/udp -p 80:80 -e TZ='UTC' pihole/pihole:latest\n[Install]\nWantedBy=multi-user.target"
+        "contents": "[Service]\nExecStart=/usr/bin/podman run --rm --name pihole -p 53:53/tcp -p 53:53/udp -p 80:80 -e TZ='Europe/Brussels' pihole/pihole:latest\n[Install]\nWantedBy=multi-user.target"
       }
     ]
   }
